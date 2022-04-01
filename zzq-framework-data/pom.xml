@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>zzq-framework</artifactId>
+        <groupId>com.zzq</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>zzq-framework-data</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>zzq-framework-data-kafka</module>
+        <module>zzq-framework-data-mysql</module>
+        <module>zzq-framework-data-redis</module>
+        <module>zzq-framework-data-dubbo-provider</module>
+        <module>zzq-framework-data-sqlserver</module>
+    </modules>
+
+</project>

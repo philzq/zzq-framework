@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<!--
+官方：
+http://www.mybatis.org/generator/reference/pluggingIn.html
+https://github.com/mybatis/generator/tree/master/core/mybatis-generator-core/src/main/java/org/mybatis/generator/plugins
+-->
+
+<generatorConfiguration>
+    <context id="mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <property name="suppressTypeWarnings" value="true"/>
+
+        <!--视图没有主键，自己在table标签里创建个虚拟的-->
+        <!--https://github.com/mybatis/generator/blob/master/core/mybatis-generator-core/src/main/java/org/mybatis/generator/plugins/VirtualPrimaryKeyPlugin.java -->
+        <plugin type="org.mybatis.generator.plugins.VirtualPrimaryKeyPlugin"/>
+
+        <!--为Model加上Swagger的注解-->
+        <plugin type="com.zzq.mybatisgeneratorplugins.plugins.SwaggerAnnotationPlugin"/>
+
+        <!--为Model加上lombok的import及自己想在类上加的注解，都是以|分割-->
+        <plugin type="com.zzq.mybatisgeneratorplugins.plugins.LombokAnnotationPlugin">
+            <property name="imports" value="lombok.*|lombok.experimental.*"/>
+            <property name="annotations" value="@Data|@SuperBuilder|@AllArgsConstructor|@NoArgsConstructor"/>
+        </plugin>
+
+        <!--为Model加上Jpa注解@Entity,@Id,@Table,@Column等-->
+        <plugin type="com.zzq.mybatisgeneratorplugins.plugins.JpaAnnotationPlugin"/>
+
+        <!-- ★★ 其它的插件都放在这个前端 ★★ 集成tk 通用mapper，Model，SqlMap，DAO都是融合的：同一文件上面自动，下面手动-->
+        <plugin type="com.zzq.mybatisgeneratorplugins.plugins.TkMapperPlugin">
+            <!--所有生成的Mapper都继承自这个设定，多个可以“,”隔开-->
+            <property name="mappers" value="com.zzq.zzqframeworkdatamysql.mapper.MysqlMapper"/>
+            <!-- Field加类似@ColumnType(jdbcType = JdbcType.NVARCHAR)，最终运行时效果：#{resourceID,jdbcType=BIGINT}-->
+            <property name="isGenColumnTypeWithJdbcType" value="true"/>
+            <!--是否融合Model新旧imports-->
+            <property name="isMixModelImports" value="true"/>
+        </plugin>
+
+
+        <!--Model与XML增量更新插件-->
+        <!--放在TkMapperPlugin与MybatisPlusPlugin插件后-->
+        <plugin type="com.zzq.mybatisgeneratorplugins.plugins.IncrementalUpdatingPlugin"/>
+
+
+        <!--为Model加上javadoc，内容是数据库备注-->
+        <commentGenerator type="com.zzq.mybatisgeneratorplugins.plugins.DatabaseCommentGenerator">
+            <property name="suppressDate" value="true"/>
+            <!--zzq生成实体备注的插件不关注此设置-->
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://110.110.1.56:3306/bigdataplat?useUnicode=true&amp;characterEncoding=utf8&amp;zeroDateTimeBehavior=convertToNull&amp;useSSL=true&amp;serverTimezone=GMT%2B8"
+                        userId="root"
+                        password="sql@zzq!123">
+            <!-- 新增下面这个属性-->
+            <property name="useInformationSchema" value="true"/>
+        </jdbcConnection>
+
+        <javaTypeResolver type="com.zzq.mybatisgeneratorplugins.plugins.JavaTypeResolverDefaultImpl">
+            <property name="forceBigDecimals" value="false"/>
+            <!-- 简单说就是生成 LocalDateTime而不是Date -->
+            <property name="useJSR310Types" value="true"/>
+        </javaTypeResolver>
+
+        <!--    Model    -->
+        <javaModelGenerator targetPackage="com.zzq.zzqframeworkdatamysql.entity.domain.bigdataplat"
+                            targetProject="../zzq-framework-data/zzq-framework-data-mysql/src/main/java">
+        </javaModelGenerator>
+
+        <!--    Xml  SqlMap    -->
+        <sqlMapGenerator targetPackage="mybatis/bigdataplat" targetProject="../zzq-framework-data/zzq-framework-data-mysql/src/main/resources">
+        </sqlMapGenerator>
+
+        <!--   DAO Mapper    -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.zzq.zzqframeworkdatamysql.mapper.bigdataplat"
+                             targetProject="../zzq-framework-data/zzq-framework-data-mysql/src/main/java">
+        </javaClientGenerator>
+
+        <table tableName="table"  domainObjectName="TableDO" mapperName="TableMapper">
+            <property name="useActualColumnNames" value="false"/>
+            <property name="ignoreQualifiersAtRuntime" value="true"/>
+        </table>
+    </context>
+
+    <context id="sqlserver" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <property name="suppressTypeWarnings" value="true"/>
+
+        <!--视图没有主键，自己在table标签里创建个虚拟的-->
+        <!--https://github.com/mybatis/generator/blob/master/core/mybatis-generator-core/src/main/java/org/mybatis/generator/plugins/VirtualPrimaryKeyPlugin.java -->
+        <plugin type="org.mybatis.generator.plugins.VirtualPrimaryKeyPlugin"/>
+
+        <!--为Model加上Swagger的注解-->
+        <plugin type="com.zzq.mybatisgeneratorplugins.plugins.SwaggerAnnotationPlugin"/>
+
+        <!--为Model加上lombok的import及自己想在类上加的注解，都是以|分割-->
+        <plugin type="com.zzq.mybatisgeneratorplugins.plugins.LombokAnnotationPlugin">
+            <property name="imports" value="lombok.*|lombok.experimental.*"/>
+            <property name="annotations" value="@Data|@SuperBuilder|@AllArgsConstructor|@NoArgsConstructor"/>
+        </plugin>
+
+        <!--为Model加上Jpa注解@Entity,@Id,@Table,@Column等-->
+        <plugin type="com.zzq.mybatisgeneratorplugins.plugins.JpaAnnotationPlugin"/>
+
+        <!-- ★★ 其它的插件都放在这个前端 ★★ 集成tk 通用mapper，Model，SqlMap，DAO都是融合的：同一文件上面自动，下面手动-->
+        <plugin type="com.zzq.mybatisgeneratorplugins.plugins.TkMapperPlugin">
+            <!--所有生成的Mapper都继承自这个设定，多个可以“,”隔开-->
+            <property name="mappers" value="com.zzq.zzqframeworkdatasqlserver.mapper.SqlServerMapper"/>
+            <!-- Field加类似@ColumnType(jdbcType = JdbcType.NVARCHAR)，最终运行时效果：#{resourceID,jdbcType=BIGINT}-->
+            <property name="isGenColumnTypeWithJdbcType" value="true"/>
+            <!--是否融合Model新旧imports-->
+            <property name="isMixModelImports" value="true"/>
+        </plugin>
+
+
+        <!--Model与XML增量更新插件-->
+        <!--放在TkMapperPlugin与MybatisPlusPlugin插件后-->
+        <plugin type="com.zzq.mybatisgeneratorplugins.plugins.IncrementalUpdatingPlugin"/>
+
+
+        <!--为Model加上javadoc，内容是数据库备注-->
+        <commentGenerator type="com.zzq.mybatisgeneratorplugins.plugins.DatabaseCommentGenerator">
+            <property name="suppressDate" value="true"/>
+            <!--zzq生成实体备注的插件不关注此设置-->
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+
+        <jdbcConnection driverClass="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+                        connectionURL="jdbc:sqlserver://110.110.1.109:1433;DatabaseName=bigdataplat"
+                        userId="sa"
+                        password="198603yang">
+            <!-- 新增下面这个属性-->
+            <property name="useInformationSchema" value="true"/>
+        </jdbcConnection>
+
+        <javaTypeResolver type="com.zzq.mybatisgeneratorplugins.plugins.JavaTypeResolverDefaultImpl">
+            <property name="forceBigDecimals" value="false"/>
+            <!-- 简单说就是生成 LocalDateTime而不是Date -->
+            <property name="useJSR310Types" value="true"/>
+        </javaTypeResolver>
+
+        <!--    Model    -->
+        <javaModelGenerator targetPackage="com.zzq.zzqframeworkdatasqlserver.entity.domain.bigdataplat"
+                            targetProject="../zzq-framework-data/zzq-framework-data-sqlserver/src/main/java">
+        </javaModelGenerator>
+
+        <!--    Xml  SqlMap    -->
+        <sqlMapGenerator targetPackage="mybatis/bigdataplat" targetProject="../zzq-framework-data/zzq-framework-data-sqlserver/src/main/resources">
+        </sqlMapGenerator>
+
+        <!--   DAO Mapper    -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.zzq.zzqframeworkdatasqlserver.mapper.bigdataplat"
+                             targetProject="../zzq-framework-data/zzq-framework-data-sqlserver/src/main/java">
+        </javaClientGenerator>
+
+        <table tableName="table"  domainObjectName="TableDO" mapperName="TableMapper">
+            <property name="useActualColumnNames" value="false"/>
+            <property name="ignoreQualifiersAtRuntime" value="true"/>
+        </table>
+
+
+    </context>
+</generatorConfiguration>

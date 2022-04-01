@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.zzq</groupId>
+    <artifactId>zzq-framework</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+
+    <name>zzq</name>
+    <url>http://www.zzq.vip</url>
+    <description>zzq脚手架哦吼</description>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>zzq-framework-common</module>
+        <module>zzq-framework-data</module>
+        <module>zzq-framework-plugin</module>
+        <module>zzq-framework-code-gen</module>
+        <module>zzq-framework-service</module>
+        <module>zzq-framework-application</module>
+    </modules>
+
+
+    <properties>
+        <zzq.framework.version>0.0.1-SNAPSHOT</zzq.framework.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
+        <druid.version>1.2.6</druid.version>
+        <bitwalker.version>1.21</bitwalker.version>
+        <swagger.version>3.0.0</swagger.version>
+
+        <mybatis-spring-boot.version>2.1.4</mybatis-spring-boot.version>
+        <pagehelper.boot.version>1.3.0</pagehelper.boot.version>
+        <mapper-spring-boot-starter.vsersion>2.1.5</mapper-spring-boot-starter.vsersion>
+        <druid-spring-boot-starter.version>1.2.6</druid-spring-boot-starter.version>
+        <sharding-jdbc-core.version>4.1.1</sharding-jdbc-core.version>
+
+        <fastjson.version>1.2.76</fastjson.version>
+        <oshi.version>5.7.4</oshi.version>
+        <jna.version>5.8.0</jna.version>
+        <commons.io.version>2.10.0</commons.io.version>
+        <commons.fileupload.version>1.4</commons.fileupload.version>
+        <commons.collections.version>3.2.2</commons.collections.version>
+        <poi.version>4.1.2</poi.version>
+
+        <dubbo.version>2.0.0</dubbo.version>
+        <curator.version>2.10.0</curator.version>
+        <zookeeper.version>3.4.6</zookeeper.version>
+
+        <logisticsex.version>1.0-SNAPSHOT</logisticsex.version>
+        <logisticsgw.version>1.0-SNAPSHOT</logisticsgw.version>
+
+        <zookeeper.version>3.4.10</zookeeper.version>
+        <dubbo-spring-boot-starter.version>3.0.6</dubbo-spring-boot-starter.version>
+        <curator.version>4.0.0</curator.version>
+    </properties>
+
+    <!-- 依赖声明 -->
+    <dependencyManagement>
+        <dependencies>
+
+            <!-- SpringBoot的依赖配置-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>2.2.13.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!--################项目内依赖#################-->
+            <!-- 数据源模块-->
+            <dependency>
+                <groupId>com.zzq</groupId>
+                <artifactId>zzq-framework-data-mysql</artifactId>
+                <version>${zzq.framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zzq</groupId>
+                <artifactId>zzq-framework-data-sqlserver</artifactId>
+                <version>${zzq.framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zzq</groupId>
+                <artifactId>zzq-framework-data-redis</artifactId>
+                <version>${zzq.framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zzq</groupId>
+                <artifactId>zzq-framework-data-kafka</artifactId>
+                <version>${zzq.framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zzq</groupId>
+                <artifactId>zzq-framework-data-dubbo-provider</artifactId>
+                <version>${zzq.framework.version}</version>
+            </dependency>
+            <!-- 业务模块-->
+            <dependency>
+                <groupId>com.zzq</groupId>
+                <artifactId>zzq-framework-service-common</artifactId>
+                <version>${zzq.framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zzq</groupId>
+                <artifactId>zzq-framework-service-dubbo-provider</artifactId>
+                <version>${zzq.framework.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.zzq</groupId>
+                <artifactId>zzq-framework-service-consumer</artifactId>
+                <version>${zzq.framework.version}</version>
+            </dependency>
+            <!-- 通用工具-->
+            <dependency>
+                <groupId>com.zzq</groupId>
+                <artifactId>zzq-framework-common</artifactId>
+                <version>${zzq.framework.version}</version>
+            </dependency>
+            <!--################项目内依赖#################-->
+
+            <!--            mysql                                                           -->
+            <!-- pagehelper 分页插件 -->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper.boot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>tk.mybatis</groupId>
+                <artifactId>mapper-spring-boot-starter</artifactId>
+                <version>${mapper-spring-boot-starter.vsersion}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid-spring-boot-starter.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.shardingsphere</groupId>
+                <artifactId>sharding-jdbc-core</artifactId>
+                <version>${sharding-jdbc-core.version}</version>
+            </dependency>
+
+            <!-- Swagger3依赖 -->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-boot-starter</artifactId>
+                <version>${swagger.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>io.swagger</groupId>
+                        <artifactId>swagger-models</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <!-- io常用工具类 -->
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons.io.version}</version>
+            </dependency>
+
+            <!-- 文件上传工具类 -->
+            <dependency>
+                <groupId>commons-fileupload</groupId>
+                <artifactId>commons-fileupload</artifactId>
+                <version>${commons.fileupload.version}</version>
+            </dependency>
+
+            <!-- excel工具 -->
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+
+            <!-- collections工具类 -->
+            <dependency>
+                <groupId>commons-collections</groupId>
+                <artifactId>commons-collections</artifactId>
+                <version>${commons.collections.version}</version>
+            </dependency>
+
+            <!-- 阿里JSON解析器 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+            <!--            zk-dubbo                -->
+            <dependency>
+                <groupId>org.apache.zookeeper</groupId>
+                <artifactId>zookeeper</artifactId>
+                <version>${zookeeper.version}</version>
+                <!--排除这个slf4j-log4j12-->
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-log4j12</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-spring-boot-starter</artifactId>
+                <version>${dubbo-spring-boot-starter.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-framework</artifactId>
+                <version>${curator.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-recipes</artifactId>
+                <version>${curator.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-x-discovery</artifactId>
+                <version>${curator.version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
+        </dependency>
+
+        <!-- 防止进入swagger页面报类型转换错误，排除3.0.0中的引用，手动增加1.6.2版本 -->
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-models</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>easyexcel</artifactId>
+            <version>2.2.8</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>servlet-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.poi</groupId>
+                    <artifactId>poi</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.poi</groupId>
+                    <artifactId>poi-ooxml</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.poi</groupId>
+                    <artifactId>poi-ooxml-schemas</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>public</id>
+            <name>aliyun nexus</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+</project>
